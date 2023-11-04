@@ -1,53 +1,60 @@
-<h1>
-  List of all actors
-</h1>
+<h1>List of all actors</h1>
+
+<form action="/actors" method="post">
+  <div>
+    <label for="name_field">Name</label>
+    <input id="name_field" type="text" name="the_name">
+  </div>
+
+  <div>
+    <label for="dob_field">Dob</label>
+    <input id="dob_field" type="date" name="the_dob">
+  </div>
+
+  <div>
+    <label for="bio_field">Bio</label>
+    <input id="bio_field" type="text" name="the_bio">
+  </div>
+
+  <div>
+    <label for="image1_field">Image</label>
+    <input id="image1_field" type="text" name="the_image1">
+  </div>
+
+  <button>
+    Create actor
+  </button>
+</form>
 
 <hr>
 
 <table border="1">
   <tr>
-    <th>
-      ID
-    </th>
-
-    <th>
-      Image
-    </th>
-
-    <th>
-      Name
-    </th>
-
-    <th>
-      Dob
-    </th>
-
-    <th>
-    </th>
+    <th>ID</th>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Dob</th>
+    <th></th>
   </tr>
 
   <% @list_of_actors.each do |an_actor| %>
   <tr>
+    <td><%= an_actor.id %></td>
+    <td><img src="<%= an_actor.image %>" style="width:250px;"></td>
+    <td><%= an_actor.name %></td>
+    <td><%= an_actor.dob %></td>
     <td>
-      <%= an_actor.id %>
+      <% matching_actors = Actor.where({ :actor_id => an_actor.id }) %>
+      <% the_actor = matching_actors.at(0) %>
+      
+      <% if the_actor == nil %>
+        Uh oh! We weren't able to find a director for this movie.
+      <% else %>
+        <%= the_actor.name %>
+      <% end %>
     </td>
-
     <td>
-      <img src="<%= an_actor.image %>" style="width:250px;">
-    </td>
-
-    <td>
-      <%= an_actor.name %>
-    </td>
-
-    <td>
-      <%= an_actor.dob %>
-    </td>
-
-    <td>
-      <a href="/actors/<%= an_actor.id %>">
-        Show details
-      </a>
+      <a href="/actors/<%= an_actor.id %>">Show details</a>
     </td>
   </tr>
   <% end %>

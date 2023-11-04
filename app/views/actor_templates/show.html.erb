@@ -1,5 +1,5 @@
 <h1>
-  Actor #<%= @the_actor.id %> details
+  Actor #<%= @a_actor.id %> details
 </h1>
 
 <a href="/actors">
@@ -85,10 +85,15 @@
   <% matching_characters.each do |a_character| %>
     <% m_id = a_character.movie_id %>
 
-    <% matching_movies = Movie.where({ :id => m_id }) %>
+  <% matching_movies = Movie.where({ :id => m_id }) %>
 
-    <% the_movie = matching_movies.at(0) %>
+  <% the_movie = matching_movies.at(0) %>
 
+  <% if the_actor == nil %>
+    Uh oh! We weren't able to find an actor for this movie.
+  <% else %>
+    <%= the_actor.name %>
+  <% end %>
     <tr>
       <td>
         <%= the_movie.title %>
@@ -99,13 +104,7 @@
       </td>
 
       <td>
-        <% d_id = the_movie.director_id %>
-        
-        <% matching_directors = Director.where({ :id => d_id }) %>
-        
-        <% the_director = matching_directors.at(0) %>
 
-        <%= the_director.name %>
       </td>
 
       <td>
